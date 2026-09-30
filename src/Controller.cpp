@@ -97,6 +97,8 @@ void Controller::Initialize()
     emit IsDemoModeChanged();
     emit IsTraceEnabledChanged();
     emit ThemeChanged();
+    QThread::sleep(5);
+    //emit initializationComplete();
 }
 
 void Controller::setIsAppConnected(bool isappconnected)

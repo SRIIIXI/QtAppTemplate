@@ -12,7 +12,7 @@ Page
 
     Component.onCompleted:
     {
-        creditBalanceGraph.value = applicationData.RemainingCreditPercent.toFixed(2);
+        creditBalanceGraph.value = 75;
     }
 
     Rectangle
@@ -43,7 +43,7 @@ Page
             anchors.topMargin: 10
             anchors.top: graphRect.top
             Material.accent: applicationData.Theme.AccentColor
-            text: applicationData.CreditCurrency;
+            text: "SDR";
             font.bold: true
             color: applicationData.Theme.FontColor
         }
@@ -52,7 +52,7 @@ Page
         {
             id: creditBalanceGraph
             lineWidth: (graphRect.height*0.6)*0.1
-            value: applicationData.RemainingCreditPercent.toFixed(2)
+            value: 25
             size: graphRect.height*0.7
             secondaryColor: applicationData.Theme.AccentLowColor
             primaryColor: applicationData.Theme.AccentColor
@@ -63,7 +63,7 @@ Page
         Text
         {
             id: mainText
-            text: "Remaining\n" + applicationData.RemainingCreditStr + " " + applicationData.CreditCurrency
+            text: "Remaining 25\n"
             anchors.centerIn: parent
             font.pointSize: headerPanel.fontSizeSmall
             anchors.horizontalCenter: parent.horizontalCenter
@@ -97,7 +97,7 @@ Page
         Text
         {
             id: txtTotal
-            text: applicationData.GrossCreditStr + " " + applicationData.CreditCurrency
+            text: "100"
             anchors.left: divider.left
             anchors.leftMargin:  10
             anchors.bottom: parent.bottom
@@ -139,14 +139,7 @@ Page
             anchors.topMargin: 10
             text:
             {
-                if(applicationData.PaymentType === 1)
-                {
-                    return "Post Paid (" + applicationData.CreditCurrency + ")"
-                }
-                else
-                {
-                    return "Pre Paid (" + applicationData.CreditCurrency + ")"
-                }
+                return "SDR"
             }
 
             font.bold: true
@@ -184,7 +177,7 @@ Page
             anchors.rightMargin: 10
             anchors.top: horizontalLine.bottom
             anchors.topMargin: 10
-            text:  applicationData.DeliveredEnergyStr + " kWh"
+            text:  "SDR"
             font.bold: true
             color: applicationData.Theme.FontColor
             font.pointSize: headerPanel.fontSizeLarge
@@ -213,7 +206,7 @@ Page
             anchors.leftMargin:  10
             anchors.top: horizontalLine.bottom
             anchors.topMargin: 10
-            text: applicationData.InstantaneousPowerStr + " kW"
+            text: "SDR"
             font.bold: true
             color: applicationData.Theme.FontColor
             font.pointSize: headerPanel.fontSizeLarge

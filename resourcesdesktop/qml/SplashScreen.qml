@@ -37,27 +37,16 @@ Page
     {
        id: splashRect
        anchors.fill: parent
-       color: "white"
+       color: applicationData.Theme.BaseColor
 
        AnimatedImage
        {
            id: animation_splash
-           width: splashScreen.width * 0.5
-           height:  splashScreen.width * 0.5
+           width: splashScreen.width * 0.35
+           height:  splashScreen.width * 0.35
            source: "../images/AnimationSplash.gif"
            anchors.horizontalCenter: parent.horizontalCenter
            anchors.verticalCenter: parent.verticalCenter
-       }
-
-       Text
-       {
-           id: appName
-           text: "Meter Reader"
-           anchors.horizontalCenter: parent.horizontalCenter
-           anchors.top: animation_splash.bottom
-           anchors.topMargin: 40
-           font.bold: true
-           color: applicationData.Theme.AccentColor
        }
     }
 
@@ -74,7 +63,7 @@ Page
         {
             id: companyimg
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "../images/MeterReader.png"
+            source: "../images/Logo.png"
             height: companyName.height
             width: companyName.width
         }
@@ -83,7 +72,7 @@ Page
     Label
     {
         id: swVersion
-        text: "Version " + applicationData.AppVersion
+        text: "Qt Application Template | Version " + applicationData.AppVersion
         color: "darkgrey"
         font.pointSize: fontSizeSmall
         anchors.bottom: parent.bottom

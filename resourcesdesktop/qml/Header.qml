@@ -108,7 +108,7 @@ Rectangle
 
             background: Rectangle
             {
-                color: applicationData.Theme.BackgroundColor
+                color: applicationData.Theme.BaseColor
             }
         }
 
@@ -160,7 +160,7 @@ Rectangle
                 anchors.left: connectionStatusIcon.right
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                text: applicationData.CurrentMeterSerialNo;
+                //text: applicationData.CurrentMeterSerialNo;
                 font.pointSize: fontSizeSmall
                 visible: isMeterNameVisible
             }
@@ -218,18 +218,6 @@ Rectangle
     Connections
     {
         target: applicationData
-
-        function onWorkflowProgress(str)
-        {
-            if(str === 0)
-            {
-                progressPerCent.text = " ";
-            }
-            else
-            {
-                progressPerCent.text = str.toString()+"%";
-            }
-        }
 
         function onProgressIndicatorsOff()
         {

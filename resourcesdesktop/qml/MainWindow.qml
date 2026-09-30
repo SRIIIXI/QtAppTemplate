@@ -191,11 +191,11 @@ ApplicationWindow
 
         background: Rectangle
         {
-            color: applicationData.Theme.AccentColor
+            color: applicationData.Theme.AccentBaseColor
             radius: 0
         }
 
-        Material.accent: applicationData.Theme.AccentColor
+        Material.accent: applicationData.Theme.AccentBaseColor
         Material.theme:
         {
             if(applicationData.IsDarkTheme === true)
@@ -614,32 +614,11 @@ ApplicationWindow
             //stackView.push("Dashboard.qml")
         }
 
-        function onTokenAdded()
-        {
-            //stackView.pop();
-            applicationData.invokeSaveCurrentPage("AvailableTokens.qml")
-            //stackView.push("AvailableTokens.qml");
-        }
-
-        function onMeterAdded()
-        {
-            //stackView.pop();
-            applicationData.invokeSaveCurrentPage("AvailableMeters.qml")
-            //stackView.push("AvailableMeters.qml");
-        }
-
         function onUserLoginSucceeded()
         {
             //stackView.pop();
             applicationData.invokeSaveCurrentPage("AvailableMeters.qml")
             //stackView.push("AvailableMeters.qml");
-        }
-
-        function onAlarmSettingsChanged()
-        {
-            //stackView.pop();
-            applicationData.invokeSaveCurrentPage("Alarms.qml")
-            //stackView.push("Alarms.qml");
         }
 
         function onPageAction(pg)
