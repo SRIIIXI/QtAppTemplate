@@ -60,7 +60,7 @@ Rectangle
         id: titleRect
         width: parent.width
         height: headerID.height * 0.6
-        color: applicationData.Theme.BackgroundColor
+        color: applicationData.Theme.BaseColor
 
         ToolButton
         {
@@ -116,7 +116,7 @@ Rectangle
         {
             text: headerTitle
             font.bold: true
-            color: applicationData.Theme.FontColor
+            color: applicationData.Theme.TextPrimaryColor
             elide: Label.ElideRight
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
@@ -133,7 +133,7 @@ Rectangle
         height: headerID.height * 0.4
         anchors.top: titleRect.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        color: applicationData.Theme.BackgroundColor
+        color: applicationData.Theme.BaseColor
 
         Rectangle
         {
@@ -141,7 +141,7 @@ Rectangle
             height: parent.height
             width: parent.width*0.94
             anchors.horizontalCenter: parent.horizontalCenter
-            color: applicationData.Theme.BackgroundColor
+            color: applicationData.Theme.BaseColor
 
             Image
             {
@@ -156,7 +156,7 @@ Rectangle
 
             Text
             {
-                color: applicationData.Theme.FontColor
+                color: applicationData.Theme.TextPrimaryColor
                 anchors.left: connectionStatusIcon.right
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
@@ -168,7 +168,7 @@ Rectangle
             Text
             {
                 id: syncTimeStamp
-                color: applicationData.Theme.FontColor
+                color: applicationData.Theme.TextPrimaryColor
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: applicationData.AppSyncTime;
@@ -179,7 +179,7 @@ Rectangle
             Text
             {
                 id: progressPerCent
-                color: applicationData.Theme.FontColor
+                color: applicationData.Theme.TextPrimaryColor
                 anchors.rightMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: progressAnimator.left
@@ -197,7 +197,7 @@ Rectangle
                 anchors.right: infoRectInterior.right
                 anchors.rightMargin: 0
                 running: true
-                Material.accent: applicationData.Theme.AccentColor
+                Material.accent: applicationData.Theme.AccentBaseColor
                 Material.theme:
                 {
                     if(applicationData.IsDarkTheme === true)

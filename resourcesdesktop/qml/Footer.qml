@@ -40,7 +40,7 @@ Rectangle
     {
         width: parent.width
         height: parent.height
-        color: applicationData.Theme.BackgroundColor
+        color: applicationData.Theme.BaseColor
     }
 
     Connections

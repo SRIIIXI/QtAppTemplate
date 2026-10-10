@@ -486,7 +486,7 @@ ApplicationWindow
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        color: applicationData.Theme.ControlColor
+        color: applicationData.Theme.WidgetActiveColor
         Material.accent: applicationData.Theme.AccentColor
         Material.theme:
         {
