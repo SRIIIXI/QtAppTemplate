@@ -88,7 +88,7 @@ Controller::Controller(QGuiApplication *appPtr, QObject *parent)
     }
 }
 
-void Controller::Initialize()
+void Controller::InitializeSysten()
 {
     Help::LoadHelpStrings(0, helpStringList_);
     emit HelpStringsChanged();
@@ -98,7 +98,23 @@ void Controller::Initialize()
     emit IsTraceEnabledChanged();
     emit ThemeChanged();
     QThread::sleep(5);
+}
+
+void Controller::invokeApplicationInitialization()
+{
     //emit initializationComplete();
+    qDebug() << "Starting initialization thread";
+
+    ApplicationInitializationThread *workerThread = new ApplicationInitializationThread(this);
+    connect(workerThread, &ApplicationInitializationThread::resultReady, this, &Controller::OnAppInitializationComplete);
+    connect(workerThread, &ApplicationInitializationThread::finished, workerThread, &QObject::deleteLater);
+    workerThread->start();
+
+}
+
+void Controller::OnAppInitializationComplete()
+{
+    qDebug() << "Initialization complete";
 }
 
 void Controller::setIsAppConnected(bool isappconnected)
@@ -617,7 +633,6 @@ void Controller::invokeResetPasscodeStage3(QString passcode)
     }
 
     emit CurrentUserChanged();
-
     emit pageAction(9);
 }
 
@@ -632,3 +647,9 @@ UserInfo Controller::getCurrentUser()
     return currentUser_;
 }
 
+void ApplicationInitializationThread::run()
+{
+    QString result;
+    QThread::sleep(5);
+    emit resultReady(result);
+}

@@ -32,6 +32,7 @@ public:
 
     Q_INVOKABLE void invokeThemeUpdate();
     Q_INVOKABLE void invokeChangePage(int ipage);
+    Q_INVOKABLE void invokeApplicationInitialization();
 
     Q_INVOKABLE void invokeCancel();
     Q_INVOKABLE void invokeExit();
@@ -97,8 +98,7 @@ public:
     Q_PROPERTY (bool IsCameraAccessEnabled READ getIsCameraAccessEnabled NOTIFY IsCameraAccessEnabledChanged)
     bool getIsCameraAccessEnabled() { return (bool)ENABLE_CAMERA_ACCESS; };
 
-    void Initialize();
-    void SignalInitializationComplete();
+    void InitializeSysten();
     void Trace(QString str);
     void ClearTrace();
 
@@ -148,6 +148,8 @@ signals:
     void updateDashboard();
 
 private slots:
+    void OnAppInitializationComplete();
+
     void OnDeviceDiscovered(const QString &address, const QString &name, const QString &rssi, const QMultiHash<quint16, QByteArray> &mdata);
     void OnScanComplete();
 
@@ -202,5 +204,17 @@ private:
 };
 
 extern Controller* controllerInstance;
+
+class ApplicationInitializationThread : public QThread
+{
+    Q_OBJECT
+public:
+    explicit ApplicationInitializationThread(QObject *parent = nullptr) : QThread(parent) { }
+protected:
+    void run() override;
+
+signals:
+    void resultReady(const QString &s);
+};
 
 #endif

@@ -11,20 +11,20 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(QtAppTemplateDesktop);
 
     QtAppTemplate  app(argc, argv);
+
     BluetoothInterface binterface;
     CameraInterface cinterface;
-
     Controller controller(&app);
 
-    if(!binterface.Initialize())
-    {
-        return -1;
-    }
+    // if(!binterface.Initialize())
+    // {
+    //     return -1;
+    // }
 
-    if(!cinterface.Initialize())
-    {
-        return -1;
-    }
+    // if(!cinterface.Initialize())
+    // {
+    //     return -1;
+    // }
     
     const QUrl urlMain("qrc:///qml/MainWindow.qml");
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    controller.Initialize();
+    controller.InitializeSysten();
 
     return app.exec();
 }

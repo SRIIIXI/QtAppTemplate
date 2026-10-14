@@ -5,6 +5,47 @@ import QtQuick.Layouts 1.3
 
 ApplicationWindow
 {
+    id: mainWindow
+    visible: true
+    //visibility: Window.FullScreen
+
+    //width: Screen.width
+    //height: Screen.height
+
+    width: Screen.width*0.75
+    height: Screen.height*0.75
+
+    minimumHeight: height
+    minimumWidth: width
+
+    StackView
+    {
+        id: rootStack
+        anchors.fill: parent
+        Component.onCompleted:
+        {
+            rootStack.push("SplashScreen.qml")
+            applicationData.invokeApplicationInitialization()
+        }
+    }
+
+    Component
+    {
+        id: shellComponent
+        Page
+        {
+        }   // Page or Item: side menu, header, footer, inner StackView
+    }
+}
+
+/*
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.3
+import QtQuick.Layouts 1.3
+
+ApplicationWindow
+{
     id: mainView
 
     Material.theme: Material.Light
@@ -745,3 +786,4 @@ ApplicationWindow
         }
     }
 }
+*/
