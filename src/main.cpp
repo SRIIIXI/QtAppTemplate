@@ -16,15 +16,15 @@ int main(int argc, char *argv[])
     CameraInterface cinterface;
     Controller controller(&app);
 
-    // if(!binterface.Initialize())
-    // {
-    //     return -1;
-    // }
+    if(!binterface.Initialize())
+    {
+        return -1;
+    }
 
-    // if(!cinterface.Initialize())
-    // {
-    //     return -1;
-    // }
+    if(!cinterface.Initialize())
+    {
+        return -1;
+    }
     
     const QUrl urlMain("qrc:///qml/MainWindow.qml");
 

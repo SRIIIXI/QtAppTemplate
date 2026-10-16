@@ -36,6 +36,7 @@ bool CameraInterface::Initialize()
     }
 #endif
 
+#if defined (Q_OS_IOS)
     QCameraPermission camera_permission{};
 
     switch (qApp->checkPermission(camera_permission))
@@ -48,6 +49,7 @@ bool CameraInterface::Initialize()
     case Qt::PermissionStatus::Granted:
         break; // proceed to search
     }
+#endif
 
     return true;
 }

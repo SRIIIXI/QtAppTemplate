@@ -129,6 +129,7 @@ bool BluetoothInterface::Initialize()
         }
     #endif
 
+    #if defined (Q_OS_IOS)
     qDebug() << "Getting Bluetooth permissions";
 
     QBluetoothPermission ble_permission{};
@@ -143,6 +144,7 @@ bool BluetoothInterface::Initialize()
         case Qt::PermissionStatus::Granted:
             break; // proceed to search
     }
+    #endif
 
     return true;
 }

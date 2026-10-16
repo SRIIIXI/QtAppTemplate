@@ -97,24 +97,37 @@ void Controller::InitializeSysten()
     emit IsDemoModeChanged();
     emit IsTraceEnabledChanged();
     emit ThemeChanged();
-    QThread::sleep(5);
 }
 
 void Controller::invokeApplicationInitialization()
 {
-    //emit initializationComplete();
     qDebug() << "Starting initialization thread";
 
     ApplicationInitializationThread *workerThread = new ApplicationInitializationThread(this);
     connect(workerThread, &ApplicationInitializationThread::resultReady, this, &Controller::OnAppInitializationComplete);
     connect(workerThread, &ApplicationInitializationThread::finished, workerThread, &QObject::deleteLater);
     workerThread->start();
+}
 
+void ApplicationInitializationThread::run()
+{
+    qDebug() << "Running initialization thread";
+
+    QString result;
+
+    for(int x = 1; x < 6; x++)
+    {
+        QThread::sleep(1);
+        qDebug() << x;
+    }
+
+    emit resultReady(result);
 }
 
 void Controller::OnAppInitializationComplete()
 {
-    qDebug() << "Initialization complete";
+    qDebug() << "Completed initialization thread";
+    emit initializationComplete();
 }
 
 void Controller::setIsAppConnected(bool isappconnected)
@@ -645,11 +658,4 @@ void Controller::setCurrentUser(UserInfo iuser)
 UserInfo Controller::getCurrentUser()
 {
     return currentUser_;
-}
-
-void ApplicationInitializationThread::run()
-{
-    QString result;
-    QThread::sleep(5);
-    emit resultReady(result);
 }

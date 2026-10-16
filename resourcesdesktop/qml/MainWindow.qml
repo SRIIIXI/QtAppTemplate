@@ -7,16 +7,25 @@ ApplicationWindow
 {
     id: mainWindow
     visible: true
-    //visibility: Window.FullScreen
 
+    //-- Temporarily commented
+    //visibility: Window.FullScreen
     //width: Screen.width
     //height: Screen.height
+    //-- Temporarily commented
 
-    width: Screen.width*0.75
-    height: Screen.height*0.75
+    //-- Temporarily code
+    width: Screen.width*0.50
+    height: Screen.height*0.50
+    //-- Temporarily code
 
     minimumHeight: height
     minimumWidth: width
+
+    onClosing:
+    {
+        close.accepted = closing;
+    }
 
     StackView
     {
@@ -32,599 +41,587 @@ ApplicationWindow
     Component
     {
         id: shellComponent
+
         Page
         {
-        }   // Page or Item: side menu, header, footer, inner StackView
-    }
-}
+            id: mainView
+            visible: true
 
-/*
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.3
-import QtQuick.Layouts 1.3
+            Material.theme: Material.Light
+            Material.accent: applicationData.Theme.AccentColor
 
-ApplicationWindow
-{
-    id: mainView
+            //-- Temporarily commented
+            //visibility: Window.FullScreen
+            //width: Screen.width
+            //height: Screen.height
+            //-- Temporarily commented
 
-    Material.theme: Material.Light
-    Material.accent: applicationData.Theme.AccentColor
-    visibility: Window.FullScreen
-    width: Screen.width
-    height: Screen.height
+            //-- Temporarily code
+            width: Screen.width*0.50
+            height: Screen.height*0.50
+            //-- Temporarily code
 
-    objectName: "mainViewID"
-    visible: true
+            property int iconHeight : applicationData.Theme.BarHeight*0.8
+            property int iconWidth : applicationData.Theme.BarHeight*0.8
+            property bool isfirst: applicationData.IsFirstRun
+            property string oldPage: ""
+            property bool isClosing: false
 
-    minimumHeight: height
-    minimumWidth: width
-
-    property int iconHeight : applicationData.Theme.BarHeight*0.8
-    property int iconWidth : applicationData.Theme.BarHeight*0.8
-    property bool isfirst: applicationData.IsFirstRun
-    property string oldPage: ""
-    property bool isClosing: false
-
-    onClosing:
-    {
-        close.accepted = isClosing;
-    }
-
-    Component.onCompleted:
-    {
-
-        stackView.push("SplashScreen.qml")
-    }
-
-    Action
-    {
-        id: navigateMenuAction
-        icon.name: stackView.depth > 1 ? "back" : "drawer"
-        onTriggered:
-        {
-            if (stackView.depth > 1)
+            Component.onCompleted:
             {
-              stackView.pop()
+                stackView.push("Dashboard.qml")
             }
-            else
+
+            Action
             {
-               drawer.open()
-            }
-        }
-    }
-
-    Action
-    {
-        id: openMenuAction
-        icon.name: stackView.depth > 1 ? "back" : "drawer"
-        onTriggered:
-        {
-            drawer.open()
-        }
-    }
-
-    Action
-    {
-        id: navigateBackAction
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("Dashboard.qml")
-            stackView.pop()
-            stackView.push("Dashboard.qml")
-        }
-    }
-
-    Action
-    {
-        id: resetPassCode
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("ResetPasscodeStage1.qml")
-            stackView.pop()
-            stackView.push("ResetPasscodeStage1.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateAddMeter
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("AddMeter.qml")
-            stackView.pop()
-            stackView.push("AddMeter.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateAvailableMeters
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("AvailableMeters.qml")
-            stackView.pop()
-            stackView.push("AvailableMeters.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateAvailableTokens
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("AvailableTokens.qml")
-            tackView.pop()
-            stackView.push("AvailableTokens.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateAddToken
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("AddToken.qml")
-            stackView.pop()
-            stackView.push("AddToken.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigatAlarmSettingsAction
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("AlarmSettings.qml")
-            stackView.pop()
-            stackView.push("AlarmSettings.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigatActiveAlarms
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("Alarms.qml")
-            stackView.pop()
-            stackView.push("Alarms.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateLogin
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("Login.qml")
-            stackView.pop()
-            stackView.push("Login.qml")
-        }
-    }
-
-    Action
-    {
-        id: navigateEnergy
-        icon.name: stackView.depth
-        onTriggered:
-        {
-            applicationData.invokeSaveCurrentPage("Energy.qml")
-            stackView.pop()
-            stackView.push("Energy.qml")
-        }
-    }
-
-    Drawer
-    {
-        id: drawer
-        width: applicationData.Theme.SideMenuExpandedWidth
-        height: mainView.height
-
-        background: Rectangle
-        {
-            color: applicationData.Theme.AccentBaseColor
-            radius: 0
-        }
-
-        Material.accent: applicationData.Theme.AccentBaseColor
-        Material.theme:
-        {
-            if(applicationData.IsDarkTheme === true)
-            {
-                return Material.Dark;
-            }
-            else
-            {
-                return Material.Light;
-            }
-        }
-
-        Column
-        {
-            anchors.fill: parent
-
-            ItemDelegate
-            {
-                text: applicationData.CurrentUser.UserId
-                width: parent.width
-
-                icon
+                id: navigateMenuAction
+                icon.name: stackView.depth > 1 ? "back" : "drawer"
+                onTriggered:
                 {
-                    source: "../images/User.png"
-                    width: iconWidth
-                    height: iconHeight
+                    if (stackView.depth > 1)
+                    {
+                      stackView.pop()
+                    }
+                    else
+                    {
+                       drawer.open()
+                    }
                 }
             }
 
-            ItemDelegate
+            Action
             {
-                text: qsTr("Home")
-                width: parent.width
+                id: openMenuAction
+                icon.name: stackView.depth > 1 ? "back" : "drawer"
+                onTriggered:
+                {
+                    drawer.open()
+                }
+            }
 
-                onClicked:
-                {                   
-                    drawer.close()
+            Action
+            {
+                id: navigateBackAction
+                icon.name: stackView.depth
+                onTriggered:
+                {
                     applicationData.invokeSaveCurrentPage("Dashboard.qml")
                     stackView.pop()
                     stackView.push("Dashboard.qml")
                 }
+            }
 
-                icon
+            Action
+            {
+                id: resetPassCode
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    source: "../images/Home.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-
-                enabled:
-                {
-                    if(applicationData.CurrentMeterSerialNo === "")
-                    {
-                        return false
-                    }
-
-                    return true
+                    applicationData.invokeSaveCurrentPage("ResetPasscodeStage1.qml")
+                    stackView.pop()
+                    stackView.push("ResetPasscodeStage1.qml")
                 }
             }
 
-            ItemDelegate
+            Action
             {
-                text: qsTr("My Meters")
-                width: parent.width
-                onClicked:
+                id: navigateAddMeter
+                icon.name: stackView.depth
+                onTriggered:
+                {
+                    applicationData.invokeSaveCurrentPage("AddMeter.qml")
+                    stackView.pop()
+                    stackView.push("AddMeter.qml")
+                }
+            }
+
+            Action
+            {
+                id: navigateAvailableMeters
+                icon.name: stackView.depth
+                onTriggered:
                 {
                     applicationData.invokeSaveCurrentPage("AvailableMeters.qml")
                     stackView.pop()
                     stackView.push("AvailableMeters.qml")
-                    drawer.close()
-                }
-
-                icon
-                {
-                    source: "../images/Meter.png"
-                    width: iconWidth
-                    height: iconHeight
                 }
             }
 
-            MenuSeparator
+            Action
             {
-                width: parent.width
-            }
-
-            ItemDelegate
-            {
-                text: qsTr("Tokens")
-                width: parent.width
-
-                onClicked:
+                id: navigateAvailableTokens
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    drawer.close()
                     applicationData.invokeSaveCurrentPage("AvailableTokens.qml")
-                    stackView.pop()
+                    tackView.pop()
                     stackView.push("AvailableTokens.qml")
                 }
+            }
 
-                icon
+            Action
+            {
+                id: navigateAddToken
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    source: "../images/Token.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-
-                enabled:
-                {
-                    if(applicationData.CurrentMeterSerialNo === "")
-                    {
-                        return false
-                    }
-
-                    return true
+                    applicationData.invokeSaveCurrentPage("AddToken.qml")
+                    stackView.pop()
+                    stackView.push("AddToken.qml")
                 }
             }
 
-            ItemDelegate
+            Action
             {
-                text: qsTr("Alarms")
-                width: parent.width
-
-                onClicked:
+                id: navigatAlarmSettingsAction
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    drawer.close()
+                    applicationData.invokeSaveCurrentPage("AlarmSettings.qml")
+                    stackView.pop()
+                    stackView.push("AlarmSettings.qml")
+                }
+            }
+
+            Action
+            {
+                id: navigatActiveAlarms
+                icon.name: stackView.depth
+                onTriggered:
+                {
                     applicationData.invokeSaveCurrentPage("Alarms.qml")
                     stackView.pop()
                     stackView.push("Alarms.qml")
                 }
+            }
 
-                icon
+            Action
+            {
+                id: navigateLogin
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    source: "../images/Alarm.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-
-                enabled:
-                {
-                    if(applicationData.CurrentMeterSerialNo === "")
-                    {
-                        return false
-                    }
-
-                    return true
+                    applicationData.invokeSaveCurrentPage("Login.qml")
+                    stackView.pop()
+                    stackView.push("Login.qml")
                 }
             }
 
-            ItemDelegate
+            Action
             {
-                text: qsTr("Energy")
-                width: parent.width
-
-                onClicked:
+                id: navigateEnergy
+                icon.name: stackView.depth
+                onTriggered:
                 {
-                    drawer.close()
                     applicationData.invokeSaveCurrentPage("Energy.qml")
                     stackView.pop()
                     stackView.push("Energy.qml")
                 }
+            }
 
-                icon
+            Drawer
+            {
+                id: drawer
+                width: applicationData.Theme.SideMenuExpandedWidth
+                height: mainView.height
+
+                background: Rectangle
                 {
-                    source: "../images/Energy.png"
-                    width: iconWidth
-                    height: iconHeight
+                    color: applicationData.Theme.AccentBaseColor
+                    radius: 0
                 }
 
-                enabled:
+                Material.accent: applicationData.Theme.AccentBaseColor
+                Material.theme:
                 {
-                    if(applicationData.CurrentMeterSerialNo === "")
+                    if(applicationData.IsDarkTheme === true)
                     {
-                        return false
+                        return Material.Dark;
+                    }
+                    else
+                    {
+                        return Material.Light;
+                    }
+                }
+
+                Column
+                {
+                    anchors.fill: parent
+
+                    ItemDelegate
+                    {
+                        text: applicationData.CurrentUser.UserId
+                        width: parent.width
+
+                        icon
+                        {
+                            source: "../images/User.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
                     }
 
-                    return true
+                    ItemDelegate
+                    {
+                        text: qsTr("Home")
+                        width: parent.width
+
+                        onClicked:
+                        {
+                            drawer.close()
+                            applicationData.invokeSaveCurrentPage("Dashboard.qml")
+                            stackView.pop()
+                            stackView.push("Dashboard.qml")
+                        }
+
+                        icon
+                        {
+                            source: "../images/Home.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        enabled:
+                        {
+                            if(applicationData.CurrentMeterSerialNo === "")
+                            {
+                                return false
+                            }
+
+                            return true
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("My Meters")
+                        width: parent.width
+                        onClicked:
+                        {
+                            applicationData.invokeSaveCurrentPage("AvailableMeters.qml")
+                            stackView.pop()
+                            stackView.push("AvailableMeters.qml")
+                            drawer.close()
+                        }
+
+                        icon
+                        {
+                            source: "../images/Meter.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+                    }
+
+                    MenuSeparator
+                    {
+                        width: parent.width
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Tokens")
+                        width: parent.width
+
+                        onClicked:
+                        {
+                            drawer.close()
+                            applicationData.invokeSaveCurrentPage("AvailableTokens.qml")
+                            stackView.pop()
+                            stackView.push("AvailableTokens.qml")
+                        }
+
+                        icon
+                        {
+                            source: "../images/Token.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        enabled:
+                        {
+                            if(applicationData.CurrentMeterSerialNo === "")
+                            {
+                                return false
+                            }
+
+                            return true
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Alarms")
+                        width: parent.width
+
+                        onClicked:
+                        {
+                            drawer.close()
+                            applicationData.invokeSaveCurrentPage("Alarms.qml")
+                            stackView.pop()
+                            stackView.push("Alarms.qml")
+                        }
+
+                        icon
+                        {
+                            source: "../images/Alarm.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        enabled:
+                        {
+                            if(applicationData.CurrentMeterSerialNo === "")
+                            {
+                                return false
+                            }
+
+                            return true
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Energy")
+                        width: parent.width
+
+                        onClicked:
+                        {
+                            drawer.close()
+                            applicationData.invokeSaveCurrentPage("Energy.qml")
+                            stackView.pop()
+                            stackView.push("Energy.qml")
+                        }
+
+                        icon
+                        {
+                            source: "../images/Energy.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        enabled:
+                        {
+                            if(applicationData.CurrentMeterSerialNo === "")
+                            {
+                                return false
+                            }
+
+                            return true
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Settings")
+                        width: parent.width
+                        onClicked:
+                        {
+                            applicationData.invokeSaveCurrentPage("Settings.qml")
+                            stackView.pop()
+                            stackView.push("Settings.qml")
+                            drawer.close()
+                        }
+
+                        icon
+                        {
+                            source: "../images/Settings.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Contact Us")
+                        width: parent.width
+                        onClicked:
+                        {
+                            applicationData.invokeSaveCurrentPage("Contact.qml")
+                            stackView.pop()
+                            stackView.push("Contact.qml")
+                            drawer.close()
+                        }
+
+                        icon
+                        {
+                            source: "../images/ContactUs.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Help")
+                        width: parent.width
+                        onClicked:
+                        {
+                            applicationData.invokeSaveCurrentPage("Help.qml")
+                            stackView.pop()
+                            stackView.push("Help.qml")
+                            drawer.close()
+                        }
+
+                        icon
+                        {
+                            source: "../images/Help.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Trace")
+                        width: parent.width
+                        onClicked:
+                        {
+                            applicationData.invokeSaveCurrentPage("Trace.qml")
+                            stackView.pop()
+                            stackView.push("Trace.qml")
+                            drawer.close()
+                        }
+
+                        icon
+                        {
+                            source: "../images/Trace.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        visible: applicationData.IsTraceEnabled
+                    }
+
+                    ItemDelegate
+                    {
+                        text: qsTr("Exit")
+                        width: parent.width
+                        onClicked:
+                        {
+                            isClosing = true;
+                            drawer.close();
+                            applicationData.invokeExit();
+                        }
+
+                        icon
+                        {
+                            source: "../images/Exit.png"
+                            width: iconWidth
+                            height: iconHeight
+                        }
+                    }
                 }
             }
 
-            ItemDelegate
+            Rectangle
             {
-                text: qsTr("Settings")
-                width: parent.width
-                onClicked:
+                id: collapsedMenu
+                visible: false
+                height: parent.height
+                width: applicationData.Theme.SideMenuCollapsedWidth
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                color: applicationData.Theme.WidgetActiveColor
+                Material.accent: applicationData.Theme.AccentColor
+                Material.theme:
                 {
-                    applicationData.invokeSaveCurrentPage("Settings.qml")
-                    stackView.pop()
-                    stackView.push("Settings.qml")
-                    drawer.close()
+                    if(applicationData.IsDarkTheme === true)
+                    {
+                        return Material.Dark;
+                    }
+                    else
+                    {
+                        return Material.Light;
+                    }
                 }
 
-                icon
+                ColumnLayout
                 {
-                    source: "../images/Settings.png"
-                    width: iconWidth
-                    height: iconHeight
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 10
+
+                    ToolButton
+                    {
+                        icon.source :
+                        if(applicationData.IsDarkTheme === true)
+                        {
+                            return "../images/MenuWhite.png";
+                        }
+                        else
+                        {
+                            return "../images/MenuBlack.png";
+                        }
+
+                        icon.width:  iconWidth
+                        icon.height: iconHeight
+                        onClicked:
+                        {
+                            drawer.open();
+                        }
+                    }
+
+                    // bottom utility icons — settings, logout etc.
+                    ToolButton
+                    {
+                        icon.source: "../images/Home.png"
+                        icon.width:  iconWidth
+                        icon.height: iconHeight
+                    }
+
+                    // spacer to push bottom items down
+                    Item
+                    {
+                        Layout.fillHeight: true
+                    }
+
+                    ToolButton
+                    {
+                        icon.source: "../images/Exit.png"
+                        icon.width:  iconWidth
+                        icon.height: iconHeight
+                        onClicked:
+                        {
+                            isClosing = true;
+                            drawer.close();
+                            applicationData.invokeExit();
+                        }
+                    }
                 }
             }
 
-            ItemDelegate
+            Rectangle
             {
-                text: qsTr("Contact Us")
-                width: parent.width
-                onClicked:
+                width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+
+                Header
                 {
-                    applicationData.invokeSaveCurrentPage("Contact.qml")
-                    stackView.pop()
-                    stackView.push("Contact.qml")
-                    drawer.close()
+                    id: headerPanel
+                    anchors.top: parent.top
+                    width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
                 }
 
-                icon
+                StackView
                 {
-                    source: "../images/ContactUs.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-            }
-
-            ItemDelegate
-            {
-                text: qsTr("Help")
-                width: parent.width
-                onClicked:
-                {
-                    applicationData.invokeSaveCurrentPage("Help.qml")
-                    stackView.pop()
-                    stackView.push("Help.qml")
-                    drawer.close()
+                   id: stackView
+                   anchors.top: headerPanel.bottom
+                   anchors.right: parent.right
+                   anchors.bottom: footerPanel.top
+                   anchors.left: parent.left
                 }
 
-                icon
+                Footer
                 {
-                    source: "../images/Help.png"
-                    width: iconWidth
-                    height: iconHeight
+                    id: footerPanel
+                    anchors.bottom: parent.bottom
+                    width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
                 }
             }
-
-            ItemDelegate
-            {
-                text: qsTr("Trace")
-                width: parent.width
-                onClicked:
-                {
-                    applicationData.invokeSaveCurrentPage("Trace.qml")
-                    stackView.pop()
-                    stackView.push("Trace.qml")
-                    drawer.close()
-                }
-
-                icon
-                {
-                    source: "../images/Trace.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-
-                visible: applicationData.IsTraceEnabled
-            }
-
-            ItemDelegate
-            {
-                text: qsTr("Exit")
-                width: parent.width
-                onClicked:
-                {
-                    isClosing = true;
-                    drawer.close();
-                    applicationData.invokeExit();
-                }
-
-                icon
-                {
-                    source: "../images/Exit.png"
-                    width: iconWidth
-                    height: iconHeight
-                }
-            }
-        }
-    }
-
-    Rectangle
-    {
-        id: collapsedMenu
-        visible: false
-        height: parent.height
-        width: applicationData.Theme.SideMenuCollapsedWidth
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        color: applicationData.Theme.WidgetActiveColor
-        Material.accent: applicationData.Theme.AccentColor
-        Material.theme:
-        {
-            if(applicationData.IsDarkTheme === true)
-            {
-                return Material.Dark;
-            }
-            else
-            {
-                return Material.Light;
-            }
-        }
-
-        ColumnLayout
-        {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 10
-
-            ToolButton
-            {
-                icon.source :
-                if(applicationData.IsDarkTheme === true)
-                {
-                    return "../images/MenuWhite.png";
-                }
-                else
-                {
-                    return "../images/MenuBlack.png";
-                }
-
-                icon.width:  iconWidth
-                icon.height: iconHeight
-                onClicked:
-                {
-                    drawer.open();
-                }
-            }
-
-            // bottom utility icons — settings, logout etc.
-            ToolButton
-            {
-                icon.source: "../images/Home.png"
-                icon.width:  iconWidth
-                icon.height: iconHeight
-            }
-
-            // spacer to push bottom items down
-            Item
-            {
-                Layout.fillHeight: true
-            }
-
-            ToolButton
-            {
-                icon.source: "../images/Exit.png"
-                icon.width:  iconWidth
-                icon.height: iconHeight
-                onClicked:
-                {
-                    isClosing = true;
-                    drawer.close();
-                    applicationData.invokeExit();
-                }
-            }
-        }
-    }
-
-    Rectangle
-    {
-        width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-
-        Header
-        {
-            id: headerPanel
-            anchors.top: parent.top
-            width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
-        }
-
-        StackView
-        {
-           id: stackView
-           anchors.top: headerPanel.bottom
-           anchors.right: parent.right
-           anchors.bottom: footerPanel.top
-           anchors.left: parent.left
-        }
-
-        Footer
-        {
-            id: footerPanel
-            anchors.bottom: parent.bottom
-            width: parent.width - applicationData.Theme.SideMenuCollapsedWidth
         }
     }
 
@@ -634,17 +631,8 @@ ApplicationWindow
 
         function onInitializationComplete()
         {
-            // if(isfirst === true)
-            // {
-            //     stackView.pop()
-            //     stackView.push("CreateUserStage1.qml")
-            // }
-            // else
-            // {
-            //     stackView.pop()
-            //     stackView.push("Login.qml")
-            // }
-            stackView.push("Dashboard.qml")
+            console.log("Initialization complete signal received")
+            rootStack.replace(shellComponent)
             collapsedMenu.visible = true;
         }
 
@@ -786,4 +774,3 @@ ApplicationWindow
         }
     }
 }
-*/
